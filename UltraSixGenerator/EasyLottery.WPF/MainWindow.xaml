@@ -13,16 +13,53 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>            
-            <RowDefinition Height="*" />            
-        </Grid.RowDefinitions>        
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <ToolBar Grid.ColumnSpan="2">
+            <Button Width="50"
+                                  Height="50"
+                                  Margin="0, 10, 0, 0"
+                                  Style="{DynamicResource MetroCircleButtonStyle}"
+                                  ToolTip="Salvar Produtos"
+                                  Command="{Binding RefreshCommand}"
+                                  CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}">
+                <Rectangle Width="20"
+                                    Height="20"
+                                    Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Rectangle.OpacityMask>
+                        <VisualBrush Stretch="Fill"
+                                    Visual="{DynamicResource appbar_refresh}" />
+                    </Rectangle.OpacityMask>
+                </Rectangle>
+            </Button>
+            
+        </ToolBar>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label>Quantidade de jogos:</Label>
+            <TextBox 
+                Grid.Column="1"
+                BorderThickness="0"
+                Text="{Binding Quantity, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                Controls:TextBoxHelper.Watermark="Quantidade Requisitada"/>
+        </Grid>
+        
         <DataGrid 
+            Grid.Row="2"
                  HorizontalAlignment="Stretch" 
                  VerticalAlignment="Stretch"
                  RenderOptions.ClearTypeHint="Enabled"
                  TextOptions.TextFormattingMode="Display"                 
                  CanUserAddRows="False"
                  SelectionUnit="FullRow"
-                 ItemsSource="{Binding Path=HotResults, Mode=TwoWay}"
+                 ItemsSource="{Binding Path=Results, Mode=TwoWay}"
                  AutoGenerateColumns="False">            
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Number"                                    
